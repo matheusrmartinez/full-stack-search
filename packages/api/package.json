@@ -4,9 +4,9 @@
   "version": "1.0.0",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "tsx watch --clear-screen=false .",
+    "dev": "tsx watch --clear-screen=false src/index.ts",
     "dev:api": "npm run dev",
-    "dev:no-watch": "tsx .",
+    "dev:no-watch": "tsx src/index.ts",
     "build": "tsc",
     "build:api": "npm run build"
   },

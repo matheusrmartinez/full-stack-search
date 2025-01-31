@@ -1,13 +1,17 @@
 import { Router } from 'express';
-import { getMongoClient } from 'src/db/mongo';
-export const hotelRoutes = Router();
-hotelRoutes.get('/hotels', async (_, res) => {
-  try {
-    const db = getMongoClient().db();
-    const collection = db.collection('hotels');
-    res.send(await collection.find().toArray());
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Internal Server Error');
-  }
-});
+import { HotelController } from 'src/hotel/controller';
+import { HotelService } from 'src/hotel/service';
+import { getMongoClient } from 'src/infra/db/mongo';
+
+export async function setupHotelRoutes(): Promise<Router> {
+  const mongoClient = getMongoClient();
+  const hotelService = new HotelService(mongoClient);
+  const hotelController = new HotelController(hotelService);
+
+  const hotelRoutes = Router();
+  hotelRoutes.get('/hotels', async (req, res, next) =>
+    hotelController.listHotels({ req, res, next }),
+  );
+
+  return hotelRoutes;
+}
