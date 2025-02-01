@@ -18,4 +18,19 @@ export class HotelController {
       next(error);
     }
   }
+
+  async getHotel({ req, res, next }: Context) {
+    try {
+      debugger;
+      const { id } = req.params;
+      debugger;
+      const hotel = await this.service.getHotel(id);
+      if (!hotel) {
+        throw new NotFoundError('hotel not found.');
+      }
+      res.status(HttpStatusCode.OK).json({ hotel });
+    } catch (error) {
+      next(error);
+    }
+  }
 }

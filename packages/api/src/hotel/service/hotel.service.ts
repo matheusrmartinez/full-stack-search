@@ -24,4 +24,10 @@ export class HotelService {
       : {};
     return await this.collection.find(query).toArray();
   }
+  async getHotel(hotelId: string) {
+    debugger;
+    return await this.collection.findOne({
+      _id: new Object(hotelId),
+    });
+  }
 }
