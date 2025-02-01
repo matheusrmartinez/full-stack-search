@@ -1,28 +1,18 @@
-import express from 'express';
-import cors from 'cors';
-import { env } from './_config/env';
-import { connectToMongoDB } from './infra/db/mongo';
-import { setupRoutes } from './http/routes';
-import { errorHandler } from './http/routes/error-handling/error.handler';
+import Registry from './di/registry.container';
+import CountryService from './country/service/country.service';
+import ExpressAdapter from './http/ExpressAdapter';
+import { CountryDAO } from './infra/DAO/country.dao';
+import MongoDBAdapter from './infra/db/MongDBAdapter';
+import { CountryController } from './country/controller/country.controller';
 
-const app = express();
+const httpServer = new ExpressAdapter();
+const connection = new MongoDBAdapter().getMongoClient();
+const countryDAO = new CountryDAO(connection);
 
-app.use(cors());
-app.use(express.json());
-
-(async () => {
-  try {
-    await connectToMongoDB();
-
-    app.use(await setupRoutes());
-    app.use(errorHandler);
-
-    const PORT = env.PORT;
-    app.listen(PORT, () => {
-      console.log(`API Server Started at ${PORT}`);
-    });
-  } catch (error) {
-    console.error('Failed to start server', error);
-    process.exit(1);
-  }
-})();
+Registry.getInstance().provide(
+  'countryService',
+  new CountryService(countryDAO),
+);
+Registry.getInstance().provide('httpServer', httpServer);
+new CountryController();
+httpServer.listen(3000);
