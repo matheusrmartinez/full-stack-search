@@ -1,5 +1,5 @@
 import { MongoClient } from 'mongodb';
-import { env } from 'src/config/env';
+import { env } from 'src/_config/env';
 
 let client: MongoClient | null = null;
 
