@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { env } from './config/env';
+import { env } from './_config/env';
 import { connectToMongoDB } from './infra/db/mongo';
 import { setupRoutes } from './http/routes';
 import { errorHandler } from './http/routes/utils/error.handler';

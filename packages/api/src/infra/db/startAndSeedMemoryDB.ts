@@ -3,7 +3,7 @@ import { MongoClient } from 'mongodb';
 import { cities } from './seeds/cities';
 import { countries } from './seeds/countries';
 import { hotels } from './seeds/hotels';
-import { env } from 'src/config/env.js';
+import { env } from 'src/_config/env.js';
 
 async function startAndSeedMemoryDB() {
   let mongod: MongoMemoryServer | null = null;

@@ -1,7 +1,7 @@
 import type { NextFunction, Request, Response } from 'express';
 import { ZodError } from 'zod';
 import { BadRequestError, NotFoundError } from './http-errors';
-import { env } from 'src/config/env';
+import { env } from 'src/_config/env';
 import { HttpStatusCode } from 'src/http/routes/utils/http-status-code';
 
 export function errorHandler(
