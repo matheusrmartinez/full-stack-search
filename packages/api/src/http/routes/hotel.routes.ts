@@ -10,7 +10,7 @@ export async function setupHotelRoutes(): Promise<Router> {
 
   const hotelRoutes = Router();
   hotelRoutes.get('/hotels', async (req, res, next) =>
-    hotelController.listHotels({ req, res, next }),
+    hotelController.getHotelList({ req, res, next }),
   );
 
   return hotelRoutes;

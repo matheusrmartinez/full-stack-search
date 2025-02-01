@@ -3,9 +3,10 @@ import { HotelService } from '../service/hotel.service';
 import { HttpStatusCode } from '../../http/routes/utils/http-status-code';
 export class HotelController {
   constructor(private readonly service: HotelService) {}
-  async listHotels({ res, next }: Context) {
+  async getHotelList({ req, res, next }: Context) {
     try {
-      const hotels = await this.service.listHotels();
+      const { search } = req.query;
+      const hotels = await this.service.listHotels(search?.toString());
       res.status(HttpStatusCode.OK).json(hotels);
     } catch (error) {
       next(error);

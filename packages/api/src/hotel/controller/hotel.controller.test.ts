@@ -1,54 +1,53 @@
 import { HotelController } from './hotel.controller';
 import { HotelService } from '../service/hotel.service';
 import { HttpStatusCode } from '../../http/routes/utils/http-status-code';
-import { Hotel } from 'schemas';
-
-let hotelController: HotelController;
-let hotelService: HotelService;
-
-beforeEach(() => {
-  hotelService = {
-    listHotels: jest.fn(),
-  } as unknown as HotelService;
-  hotelController = new HotelController(hotelService);
-});
+import { Context } from '../../types/common';
 
 describe('HotelController', () => {
-  test('should return a list of hotels with status 200', async () => {
-    const mockHotels = [{ id: 1, name: 'Hotel One' }] as unknown as Hotel[];
+  let hotelController: HotelController;
+  let hotelService: HotelService;
 
-    // Mock service method
-    (hotelService.listHotels as jest.Mock).mockResolvedValue(mockHotels);
+  beforeEach(() => {
+    hotelService = {
+      listHotels: jest.fn(),
+    } as unknown as HotelService; // Mocking HotelService
+    hotelController = new HotelController(hotelService);
+  });
 
+  it('should return a list of hotels with status 200', async () => {
+    const mockHotels = [
+      { id: 1, name: 'Hotel One' },
+      { id: 2, name: 'Hotel Two' },
+    ];
+
+    // Mock the service method to return the mock hotels
+    hotelService.listHotels = jest.fn().mockResolvedValue(mockHotels);
+
+    const req = { query: { search: 'Hotel' } } as unknown as Context['req'];
     const res = {
       status: jest.fn().mockReturnThis(),
       json: jest.fn(),
-      statusCode: 0,
-      body: null,
-    };
+    } as unknown as Context['res'];
+    const next = jest.fn() as Context['next'];
 
-    const next = jest.fn();
-
-    await hotelController.listHotels({ res, next } as any);
+    await hotelController.getHotelList({ req, res, next });
 
     expect(res.status).toHaveBeenCalledWith(HttpStatusCode.OK);
     expect(res.json).toHaveBeenCalledWith(mockHotels);
   });
 
-  test('should call next with an error if service fails', async () => {
+  it('should call next with an error if service fails', async () => {
     const error = new Error('Service error');
+    hotelService.listHotels = jest.fn().mockRejectedValue(error);
 
-    // Mock service to throw an error
-    (hotelService.listHotels as jest.Mock).mockRejectedValue(error);
-
+    const req = { query: { search: 'Hotel' } } as unknown as Context['req'];
     const res = {
       status: jest.fn().mockReturnThis(),
       json: jest.fn(),
-    };
+    } as unknown as Context['res'];
+    const next = jest.fn() as Context['next'];
 
-    const next = jest.fn();
-
-    await hotelController.listHotels({ res, next } as any);
+    await hotelController.getHotelList({ req, res, next });
 
     expect(next).toHaveBeenCalledWith(error);
   });
