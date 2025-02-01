@@ -1,9 +1,9 @@
 import type { Context } from '../../types/common';
-import { HotelService } from '../service/hotel.service';
+import { HotelDAO } from '../../infra/DAO/hotel.dao';
 import { HttpStatusCode } from '../../http/routes/utils/http-status-code';
 import { NotFoundError } from '../../http/routes/utils/http-errors';
 export class HotelController {
-  constructor(private readonly service: HotelService) {}
+  constructor(private readonly service: HotelDAO) {}
   async getHotelList({ req, res, next }: Context) {
     try {
       const { search } = req.query;

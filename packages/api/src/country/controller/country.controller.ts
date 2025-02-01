@@ -1,9 +1,9 @@
 import type { Context } from 'src/types/common';
-import { CountryService } from '../service/country.service';
+import { CountryDAO } from '../../infra/DAO/country.dao';
 import { HttpStatusCode } from '../../http/routes/utils/http-status-code';
 import { NotFoundError } from '../../http/routes/utils/http-errors';
 export class CountryController {
-  constructor(private readonly service: CountryService) {}
+  constructor(private readonly service: CountryDAO) {}
   async getCountryList({ req, res, next }: Context) {
     try {
       const { country } = req.query;

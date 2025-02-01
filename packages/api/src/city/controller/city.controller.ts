@@ -1,9 +1,9 @@
 import type { Context } from 'src/types/common';
-import { CityService } from '../service/city.service';
+import { CityDAO } from '../../infra/DAO/city.dao';
 import { HttpStatusCode } from '../../http/routes/utils/http-status-code';
 import { NotFoundError } from '../../http/routes/utils/http-errors';
 export class CityController {
-  constructor(private readonly service: CityService) {}
+  constructor(private readonly service: CityDAO) {}
   async getCityList({ req, res, next }: Context) {
     try {
       const { name } = req.query;
