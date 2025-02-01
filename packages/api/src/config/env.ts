@@ -6,7 +6,7 @@ const envSchema = z
     NODE_ENV: z
       .enum(['development', 'test', 'production'])
       .default('development'),
-    PORT: z.coerce.number().default(3001),
+    PORT: z.coerce.number().default(3003),
     DATABASE_PORT: z.coerce.number().default(3002),
     DATABASE_URL: z.string().default('mongodb://127.0.0.1'),
   })

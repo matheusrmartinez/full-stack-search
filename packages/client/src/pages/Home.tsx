@@ -1,38 +1,54 @@
 import { useEffect, useState } from 'react';
-import type { Hotel } from 'schemas';
 import { SearchBar } from '../components/Search/SearchBar';
 import { SearchResultList } from '../components/Search/SearchResultList';
-import { getHotels } from '../services/hotel/get-hotels';
 import { useDebounce } from '../hooks/useDebounce';
+import type { City, Country, Hotel } from 'schemas';
+import { getHotels } from '../services/hotel/get-hotels';
+import { getCountries } from '../services/countries/get-countries';
+import { getCities } from '../services/cities/get-cities';
 
 function Home() {
   const [inputValue, setInputValue] = useState('');
-  const [hotels, setHotels] = useState<Hotel[]>([]);
+  const [hotels, setHotels] = useState<Hotel[] | []>([]);
+  const [countries, setCountries] = useState<Country[] | []>([]);
+  const [cities, setCities] = useState<City[] | []>([]);
   const [showClearBtn, setShowClearBtn] = useState(false);
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
   const debouncedValue = useDebounce(inputValue, 300);
 
   useEffect(() => {
-    const fetchHotels = async () => {
+    const fetchResults = async () => {
       if (debouncedValue) {
-        const filteredHotels = await getHotels(debouncedValue);
-        setHotels(filteredHotels);
+        const [hotels, countries, cities] = await Promise.all([
+          getHotels(debouncedValue),
+          getCountries(debouncedValue),
+          getCities(debouncedValue),
+        ]);
+
+        setHotels(hotels ?? []);
+        setCountries(countries ?? []);
+        setCities(cities ?? []);
+
         setShowClearBtn(true);
         setDropdownVisible(true);
       } else {
         setHotels([]);
+        setCountries([]);
+        setCities([]);
         setShowClearBtn(false);
         setDropdownVisible(false);
       }
     };
 
-    fetchHotels();
+    fetchResults();
   }, [debouncedValue]);
 
   const clearSearch = () => {
     setInputValue('');
     setHotels([]);
+    setCountries([]);
+    setCities([]);
     setShowClearBtn(false);
     setDropdownVisible(false);
   };
@@ -50,7 +66,13 @@ function Home() {
                 onClear={clearSearch}
               />
 
-              {dropdownVisible && <SearchResultList hotels={hotels} />}
+              {dropdownVisible && (
+                <SearchResultList
+                  hotels={hotels}
+                  countries={countries}
+                  cities={cities}
+                />
+              )}
             </div>
           </div>
         </div>
