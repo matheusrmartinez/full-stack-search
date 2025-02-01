@@ -1,5 +1,19 @@
-import type { Hotel } from 'schemas';
-export function SearchResultList({ hotels }: { hotels: Hotel[] }) {
+import type { City, Country, Hotel } from 'schemas';
+import { ItemResult } from '../Result/ItemResult';
+
+export interface SearchResult {
+  hotels: Hotel[] | [];
+  countries: Country[] | [];
+  cities: City[] | [];
+}
+
+export function SearchResultList({ hotels, countries, cities }: SearchResult) {
+  console.log({
+    hotels,
+    countries,
+    cities,
+  });
+
   return (
     <div className="search-dropdown-menu dropdown-menu w-100 show p-2">
       <h2>Hotels</h2>
@@ -7,13 +21,37 @@ export function SearchResultList({ hotels }: { hotels: Hotel[] }) {
         <p>No hotels matched</p>
       ) : (
         hotels.map((hotel, index) => (
-          <li key={index}>
-            <a href={`/hotels/${hotel._id}`} className="dropdown-item">
-              <i className="fa fa-building mr-2"></i>
-              {hotel.hotelName}
-            </a>
-            <hr className="divider" />
-          </li>
+          <ItemResult
+            key={index}
+            label={hotel.hotelName}
+            link={`/hotels/${hotel._id}`}
+          />
+        ))
+      )}
+
+      <h2>Countries</h2>
+      {!countries.length ? (
+        <p>No countries matched</p>
+      ) : (
+        countries.map((country, index) => (
+          <ItemResult
+            key={index}
+            label={`${country.country} (${country.countryIsoCode})`}
+            link={`/countries/${country._id}`}
+          />
+        ))
+      )}
+
+      <h2>Cities</h2>
+      {!cities.length ? (
+        <p>No cities matched</p>
+      ) : (
+        cities.map((city, index) => (
+          <ItemResult
+            key={index}
+            label={city.name}
+            link={`/cities/${city._id}`}
+          />
         ))
       )}
     </div>
