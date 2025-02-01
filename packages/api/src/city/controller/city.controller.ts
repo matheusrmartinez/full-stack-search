@@ -18,12 +18,12 @@ export class CityController {
   }
   async getCity({ req, res, next }: Context) {
     try {
-      const { name } = req.params;
-      const cities = await this.service.searchCity(name);
-      if (!cities) {
+      const { id } = req.params;
+      const city = await this.service.searchCity(id);
+      if (!city) {
         throw new NotFoundError('no city found.');
       }
-      res.status(HttpStatusCode.OK).json({ cities });
+      res.status(HttpStatusCode.OK).json({ city });
     } catch (error) {
       next(error);
     }
