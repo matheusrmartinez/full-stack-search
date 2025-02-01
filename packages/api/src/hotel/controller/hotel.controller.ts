@@ -21,9 +21,7 @@ export class HotelController {
 
   async getHotel({ req, res, next }: Context) {
     try {
-      debugger;
       const { id } = req.params;
-      debugger;
       const hotel = await this.service.getHotel(id);
       if (!hotel) {
         throw new NotFoundError('hotel not found.');
