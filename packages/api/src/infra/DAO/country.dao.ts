@@ -1,6 +1,6 @@
 import { ObjectId, type Collection, type MongoClient } from 'mongodb';
 import type { Country } from 'schemas';
-export class CountryService {
+export class CountryDAO {
   private collection: Collection<Country>;
   constructor(
     private readonly dbClient: MongoClient,

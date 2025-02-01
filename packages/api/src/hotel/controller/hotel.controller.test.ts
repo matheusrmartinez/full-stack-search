@@ -1,16 +1,16 @@
 import { HotelController } from './hotel.controller';
-import { HotelService } from '../service/hotel.service';
+import { HotelDAO } from '../../infra/DAO/hotel.dao';
 import { HttpStatusCode } from '../../http/routes/utils/http-status-code';
 import { Context } from '../../types/common';
 
 describe('HotelController', () => {
   let hotelController: HotelController;
-  let hotelService: HotelService;
+  let hotelService: HotelDAO;
 
   beforeEach(() => {
     hotelService = {
       listHotels: jest.fn(),
-    } as unknown as HotelService; // Mocking HotelService
+    } as unknown as HotelDAO; // Mocking HotelService
     hotelController = new HotelController(hotelService);
   });
 

@@ -1,6 +1,6 @@
 import { ObjectId, type Collection, type MongoClient } from 'mongodb';
 import type { City } from 'schemas';
-export class CityService {
+export class CityDAO {
   private collection: Collection<City>;
   constructor(
     private readonly dbClient: MongoClient,

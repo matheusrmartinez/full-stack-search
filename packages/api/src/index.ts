@@ -3,7 +3,7 @@ import cors from 'cors';
 import { env } from './_config/env';
 import { connectToMongoDB } from './infra/db/mongo';
 import { setupRoutes } from './http/routes';
-import { errorHandler } from './http/routes/utils/error.handler';
+import { errorHandler } from './http/routes/error-handling/error.handler';
 
 const app = express();
 

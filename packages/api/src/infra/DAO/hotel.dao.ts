@@ -1,7 +1,7 @@
 import { ObjectId, type Collection, type MongoClient } from 'mongodb';
 import { Hotel } from 'schemas';
 
-export class HotelService {
+export class HotelDAO {
   private collection: Collection<Hotel>;
 
   constructor(
