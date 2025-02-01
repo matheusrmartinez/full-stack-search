@@ -8,12 +8,6 @@ export interface SearchResult {
 }
 
 export function SearchResultList({ hotels, countries, cities }: SearchResult) {
-  console.log({
-    hotels,
-    countries,
-    cities,
-  });
-
   return (
     <div className="search-dropdown-menu dropdown-menu w-100 show p-2">
       <h2>Hotels</h2>

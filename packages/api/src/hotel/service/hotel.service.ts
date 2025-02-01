@@ -1,4 +1,4 @@
-import type { Collection, MongoClient } from 'mongodb';
+import { ObjectId, type Collection, type MongoClient } from 'mongodb';
 import { Hotel } from 'schemas';
 
 export class HotelService {
@@ -23,5 +23,15 @@ export class HotelService {
         }
       : {};
     return await this.collection.find(query).toArray();
+  }
+  async getHotel(hotelId: string) {
+    if (!ObjectId.isValid(hotelId)) {
+      throw new Error('Invalid hotelId format');
+    }
+    const result = await this.collection.findOne({
+      // @ts-ignore
+      _id: new ObjectId(hotelId.trim()),
+    });
+    return result;
   }
 }
