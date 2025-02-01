@@ -1,5 +1,5 @@
 import type { Collection, MongoClient } from 'mongodb';
-import { Hotel } from '../types';
+import { Hotel } from 'schemas';
 
 export class HotelService {
   private collection: Collection<Hotel>;

@@ -1,6 +1,6 @@
-import type { Context } from 'src/types/common';
-import { HotelService } from '../service';
-import { HttpStatusCode } from 'src/http/routes/utils/http-status-code';
+import type { Context } from '../../types/common';
+import { HotelService } from '../service/hotel.service';
+import { HttpStatusCode } from '../../http/routes/utils/http-status-code';
 export class HotelController {
   constructor(private readonly service: HotelService) {}
   async listHotels({ res, next }: Context) {
