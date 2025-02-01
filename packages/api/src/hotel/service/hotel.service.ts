@@ -11,7 +11,7 @@ export class HotelService {
     this.collection = this.dbClient.db().collection<Hotel>(this.collectionName);
   }
 
-  async listHotels(search?: string) {
+  async searchHotels(search?: string) {
     const query = search
       ? {
           $or: [
