@@ -1,16 +1,14 @@
 import { useState, type ChangeEvent } from 'react';
 import { getCodeSandboxHost } from '@codesandbox/utils';
-type Hotel = {
-  _id: string;
-  chainName: string;
-  hotelName: string;
-  city: string;
-  country: string;
-};
+import type { Hotel } from 'schemas';
+import { SearchBar } from '../components/Search/SearchBar';
+import { SearchResultList } from '../components/Search/SearchResultList';
+
 const codeSandboxHost = getCodeSandboxHost(3001);
 const API_URL = codeSandboxHost
   ? `https://${codeSandboxHost}`
   : 'http://localhost:3001';
+
 const fetchAndFilterHotels = async (value: string) => {
   const hotelsData = await fetch(`${API_URL}/hotels`);
   const hotels = (await hotelsData.json()) as Hotel[];
@@ -22,64 +20,42 @@ const fetchAndFilterHotels = async (value: string) => {
       country.toLowerCase().includes(value.toLowerCase()),
   );
 };
+
 function Home() {
   const [hotels, setHotels] = useState<Hotel[]>([]);
   const [showClearBtn, setShowClearBtn] = useState(false);
+  const [dropdownVisible, setDropdownVisible] = useState(false);
+
   const fetchData = async (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.value === '') {
       setHotels([]);
       setShowClearBtn(false);
+      setDropdownVisible(false);
       return;
     }
+
     const filteredHotels = await fetchAndFilterHotels(event.target.value);
     setShowClearBtn(true);
     setHotels(filteredHotels);
+    setDropdownVisible(true);
   };
+
   return (
     <div className="App">
       <div className="container">
         <div className="row height d-flex justify-content-center align-items-center">
           <div className="col-md-6">
             <div className="dropdown">
-              <div className="form">
-                <i className="fa fa-search"></i>
-                <input
-                  type="text"
-                  className="form-control form-input"
-                  placeholder="Search accommodation..."
-                  onChange={fetchData}
-                />
-                {showClearBtn && (
-                  <span className="left-pan">
-                    <i className="fa fa-close"></i>
-                  </span>
-                )}
-              </div>
-              {!!hotels.length && (
-                <div className="search-dropdown-menu dropdown-menu w-100 show p-2">
-                  <h2>Hotels</h2>
-                  {hotels.length ? (
-                    hotels.map((hotel, index) => (
-                      <li key={index}>
-                        <a
-                          href={`/hotels/${hotel._id}`}
-                          className="dropdown-item"
-                        >
-                          <i className="fa fa-building mr-2"></i>
-                          {hotel.hotelName}
-                        </a>
-                        <hr className="divider" />
-                      </li>
-                    ))
-                  ) : (
-                    <p>No hotels matched</p>
-                  )}
-                  <h2>Countries</h2>
-                  <p>No countries matched</p>
-                  <h2>Cities</h2>
-                  <p>No cities matched</p>
-                </div>
-              )}
+              <SearchBar
+                onSearch={fetchData}
+                showClearBtn={showClearBtn}
+                onClear={() => {
+                  setHotels([]);
+                  setShowClearBtn(false);
+                }}
+              />
+
+              {dropdownVisible && <SearchResultList hotels={hotels} />}
             </div>
           </div>
         </div>
@@ -87,4 +63,5 @@ function Home() {
     </div>
   );
 }
+
 export default Home;

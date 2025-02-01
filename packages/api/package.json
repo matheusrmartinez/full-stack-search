@@ -3,10 +3,10 @@
   "type": "module",
   "version": "1.0.0",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "tsx watch --clear-screen=false .",
+    "test": "jest",
+    "dev": "tsx watch --clear-screen=false src/index.ts",
     "dev:api": "npm run dev",
-    "dev:no-watch": "tsx .",
+    "dev:no-watch": "tsx src/index.ts",
     "build": "tsc",
     "build:api": "npm run build"
   },
@@ -18,12 +18,17 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "mongodb": "^6.7.0",
+    "schemas": "*",
     "zod": "^3.24.1"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
+    "@types/jest": "^29.5.14",
+    "jest": "^29.7.0",
     "mongodb-memory-server": "^9.4.0",
+    "ts-jest": "^29.2.5",
+    "ts-node": "^10.9.2",
     "tsx": "^4.16.2",
     "typescript": "^5.4.5"
   }
