@@ -2,8 +2,10 @@ import { ObjectId, type Collection, type MongoClient } from 'mongodb';
 import type { Country } from 'schemas';
 export class CountryDAO {
   private collection: Collection<Country>;
-  private readonly collectionName = 'countries';
-  constructor(private readonly dbClient: MongoClient) {
+  constructor(
+    private readonly dbClient: MongoClient,
+    private readonly collectionName = 'countries',
+  ) {
     this.collection = this.dbClient
       .db()
       .collection<Country>(this.collectionName);
