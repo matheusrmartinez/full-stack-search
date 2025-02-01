@@ -22,7 +22,7 @@ export class HotelController {
   async getHotel({ req, res, next }: Context) {
     try {
       const { id } = req.params;
-      const hotel = await this.service.getHotel(id);
+      const hotel = await this.service.searchHotel(id);
       if (!hotel) {
         throw new NotFoundError('hotel not found.');
       }

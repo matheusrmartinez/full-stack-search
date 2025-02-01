@@ -24,7 +24,7 @@ export class HotelService {
       : {};
     return await this.collection.find(query).toArray();
   }
-  async getHotel(hotelId: string) {
+  async searchHotel(hotelId: string) {
     if (!ObjectId.isValid(hotelId)) {
       throw new Error('Invalid hotelId format');
     }

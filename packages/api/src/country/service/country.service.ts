@@ -1,4 +1,4 @@
-import type { Collection, MongoClient } from 'mongodb';
+import { ObjectId, type Collection, type MongoClient } from 'mongodb';
 import type { Country } from 'schemas';
 export class CountryService {
   private collection: Collection<Country>;
@@ -17,5 +17,15 @@ export class CountryService {
         }
       : {};
     return await this.collection.find(query).toArray();
+  }
+  async searchCountry(country: string) {
+    if (!ObjectId.isValid(country)) {
+      throw new Error('Invalid country format');
+    }
+    const result = await this.collection.findOne({
+      // @ts-ignore
+      _id: new ObjectId(country.trim()),
+    });
+    return result;
   }
 }
