@@ -3,7 +3,7 @@ import { SearchBar } from '../components/Search/SearchBar';
 import { SearchResultList } from '../components/Search/SearchResultList';
 import { useDebounce } from '../hooks/useDebounce';
 import type { City, Country, Hotel } from 'schemas';
-import { getHotels } from '../services/hotel/get-hotels';
+import { getHotels } from '../services/hotels/get-hotels';
 import { getCountries } from '../services/countries/get-countries';
 import { getCities } from '../services/cities/get-cities';
 

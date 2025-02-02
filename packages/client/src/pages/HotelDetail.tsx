@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import type { Hotel } from 'schemas';
-import { getHotelById } from '../services/hotel/get-hotel';
+import { getHotelById } from '../services/hotels/get-hotel';
 import { InternalBox } from '../components/InternalBox';
 import { StarRating } from '../components/StarRating';
 
