@@ -80,17 +80,40 @@ When clicking on one of the `Hotels`, `Cities` or `Countries` links, the applica
 
 ### Limitations
 
-Given the time constraints, we do not expect a fully production-ready solution. We're primarily interested in the approach and the overall quality of the solution. 
-Feel free to modify the current codebase as needed, including adding or removing dependencies. 
+Given the time constraints, we do not expect a fully production-ready solution. We're primarily interested in the approach and the overall quality of the solution.
+Feel free to modify the current codebase as needed, including adding or removing dependencies.
 For larger or more time-intensive changes, you're welcome to outline your ideas in the write-up section below and discuss them further during the call.
 
 <img src="./assets/search-example.png" width="400px" />
 
 ### Write-up
 
-<!-- Write-up/conclusion section -->
+**GENERAL:**
 
-_When all the behaviour is implemented, feel free to add some observations or conclusions you like to share in the section_
+- **Created a Shared Package Schema:** Developed a shared schema package to standardize data formats and enable code reuse across different projects.
+
+**API:**
+
+- **Implemented Tests for Controller and DAO:** Added unit tests for both the controller and DAO layers to maintain high quality and ensure functionality.
+- **Unified JSON Field Naming Convention:** Updated JSON field names to follow the camelCase format, aligning with JavaScript conventions for better readability and consistency.
+- **Introduced Zod for Environment Variable Validation:** Integrated the Zod library to enforce stricter validation of environment variables, offering better validation rules, default values, and error feedback.
+- **Refactored MongoDB Connection Logic:** Moved the MongoDB connection logic into its own module to separate concerns and make the code more organized and reusable.
+- **Adopted Controller and DAO Pattern:** Implemented the controller and DAO (Data Access Object) pattern to better separate concerns and manage business logic.
+- **Integrated Dependency Injection:** Incorporated dependency injection to simplify dependency management, improving testability and flexibility within the application.
+- **Centralized Error Handling System:** Established a centralized error handling system to ensure consistency in error responses and enhance the user experience across the app.
+- **Refined Route Management:** Organized hotel-related routes by moving them into a dedicated folder, improving the structure and maintainability of the codebase.
+- **Optimized Code Structure:** Restructured the code by relocating it to the `src` directory, resulting in a more efficient, clean, and maintainable project layout.
+
+**FRONTEND:**
+
+- **Standardized JSON Field Naming Convention:** Updated JSON field names to camelCase for consistency and better alignment with JavaScript best practices.
+- **Optimized API Calls with Debounce:** Refactored the API call logic into a dedicated service and added a debounce feature to enhance search performance and reduce redundant API requests.
+- **Enhanced Hotel Search Features:** Improved the hotel search functionality to filter results based on user input, making the search experience more dynamic and responsive.
+- **Modularized Search Bar Component:** Refactored the search bar into a reusable component, improving organization and allowing it to be utilized in different parts of the application.
+- **Added Routing with React Router DOM:** Implemented React Router DOM to manage routing, enabling dynamic navigation within the app, including hotel detail pages.
+- **Implemented Render Tests:** Created render tests to ensure the correct rendering of the search feature, verifying that it behaves as expected when displaying search results.
+
+_P.S.: For further details on specific changes and features, refer to the Pull Requests section. I worked on separate feature branches and submitted PRs for each, so you’ll find comprehensive information and context there._
 
 ### Database structure
 
