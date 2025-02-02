@@ -19,9 +19,6 @@ export class CountryDAO {
     return await this.collection.find(query).toArray();
   }
   async searchCountry(country: string) {
-    if (!ObjectId.isValid(country)) {
-      throw new Error('Invalid country format');
-    }
     const result = await this.collection.findOne({
       // @ts-ignore
       _id: new ObjectId(country.trim()),
