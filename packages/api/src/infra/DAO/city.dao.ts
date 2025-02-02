@@ -17,9 +17,6 @@ export class CityDAO {
     return await this.collection.find(query).toArray();
   }
   async searchCity(cityId: string) {
-    if (!ObjectId.isValid(cityId)) {
-      throw new Error('Invalid cityId format');
-    }
     const result = await this.collection.findOne({
       // @ts-ignore
       _id: new ObjectId(cityId.trim()),
